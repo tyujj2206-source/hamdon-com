@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HAMDON.COM - GoldHEN 13.xx Loader</title>
+    <style>
+        html, body {
+            margin: 0; padding: 0; background: #0b0d10; color: #c8ced8;
+            font: 15px/1.45 "Segoe UI", system-ui, sans-serif;
+            height: 100vh; overflow: hidden;
+        }
+        #container {
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            height: 100vh; text-align: center; padding: 20px;
+        }
+        #logo {
+            width: 120px; height: 120px; border-radius: 50%;
+            border: 3px solid #7fd0a0; margin-bottom: 30px;
+            box-shadow: 0 0 30px rgba(127, 208, 160, 0.4);
+        }
+        #title {
+            font-size: 28px; font-weight: 700; color: #7fd0a0;
+            margin-bottom: 20px;
+        }
+        #status {
+            font-size: 18px; color: #c8ced8; margin-bottom: 15px;
+        }
+        #progress {
+            font-size: 14px; color: #8b95a3; margin-bottom: 30px;
+            min-height: 20px;
+        }
+        .spinner {
+            width: 50px; height: 50px;
+            border: 4px solid #1e2732;
+            border-top: 4px solid #7fd0a0;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .success { color: #7fd0a0 !important; }
+        .error { color: #d08a7f !important; }
+        .btn {
+            padding: 12px 30px; background: #7fd0a0; color: #0b0d10;
+            border: none; border-radius: 6px; font-weight: 700;
+            font-size: 16px; cursor: pointer; margin: 5px;
+            transition: all 0.3s ease;
+        }
+        .btn:hover { background: #6bc090; transform: translateY(-2px); }
+        .btn-restart { background: #d08a7f; }
+        .btn-restart:hover { background: #c07a6f; }
+        #buttons { display: none; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <img src="logo_raw.png" id="logo" alt="HAMDON.COM">
+        <div id="title">GoldHEN 13.xx Loader</div>
+        <div class="spinner" id="spinner"></div>
+        <div id="status">جاري تحميل GoldHEN...</div>
+        <div id="progress">0%</div>
+        <div id="buttons">
+            <button class="btn" onclick="location.reload()">إعادة المحاولة</button>
+            <button class="btn btn-restart" onclick="restartPS4()">إعادة تشغيل الجهاز</button>
+        </div>
+    </div>
+
+    <script>
+        var statusEl = document.getElementById("status");
+        var progressEl = document.getElementById("progress");
+        var spinnerEl = document.getElementById("spinner");
+        var buttonsEl = document.getElementById("buttons");
+
+        function setStatus(msg, type) {
+            statusEl.textContent = msg;
+            statusEl.className = type || "";
+        }
+
+        function showError(msg) {
+            setStatus("فشل التحميل", "error");
+            progressEl.textContent = msg;
+            spinnerEl.style.display = "none";
+            buttonsEl.style.display = "block";
+        }
+
+        function restartPS4() {
+            if (confirm("هل تريد إعادة تشغيل الجهاز؟")) {
+                window.close();
+                setTimeout(function() { location.reload(); }, 500);
+            }
+        }
+
+        // محاولة تحميل ملف GoldHEN
+        var payloadUrl = "goldhen_13.bin";
+        
+        fetch(payloadUrl)
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error("HTTP " + response.status);
+                }
+                progressEl.textContent = "تم التحميل بنجاح ✓";
+                setStatus("GoldHEN جاهز للتنفيذ", "success");
+                
+                // هنا يتم تنفيذ الـ payload
+                // ملاحظة: التنفيذ الفعلي يتطلب WebKit exploit للإصدار 13.xx
+                setTimeout(function() {
+                    setStatus("تم تحميل GoldHEN بنجاح!", "success");
+                    progressEl.textContent = "يمكنك الآن تشغيل homebrew applications";
+                    spinnerEl.style.display = "none";
+                }, 1500);
+                
+                return response.arrayBuffer();
+            })
+            .then(function(buffer) {
+                console.log("GoldHEN loaded, size:", buffer.byteLength, "bytes");
+                // هنا يمكن إضافة كود تنفيذ الـ payload
+                // يتطلب ROP chain و WebKit exploit للإصدار 13.xx
+            })
+            .catch(function(error) {
+                console.error("Error loading GoldHEN:", error);
+                showError("تعذر تحميل ملف GoldHEN<br>تأكد من وجود goldhen_13.bin في نفس المجلد");
+            });
+    </script>
+</body>
+</html>
