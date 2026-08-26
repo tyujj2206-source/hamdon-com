@@ -21,7 +21,6 @@ html, body {
   overflow: hidden;
 }
 
-/* خلفية متحركة بالصورة الجديدة */
 body::before {
   content: '';
   position: fixed;
@@ -34,6 +33,7 @@ body::before {
   filter: blur(8px);
   animation: bgPulse 10s ease-in-out infinite alternate;
 }
+
 @keyframes bgPulse { 0% { opacity: 0.1; } 100% { opacity: 0.25; } }
 
 body::after {
@@ -54,20 +54,20 @@ body::after {
   text-align: center;
 }
 
-/* الهيدر والشعار */
 #brand {
   margin-bottom: 30px;
   animation: fadeInDown 0.8s ease-out;
 }
-#brand img { 
-  width: 100px; 
-  height: 100px; 
-  border-radius: 50%; 
+
+#brand img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
   border: 3px solid #00ff88;
   box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
   margin-bottom: 15px;
-  object-fit: cover;
 }
+
 #brand b {
   display: block;
   font-family: 'Orbitron', sans-serif;
@@ -77,7 +77,6 @@ body::after {
   text-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
 }
 
-/* البطاقة الرئيسية */
 .card {
   background: rgba(15, 20, 35, 0.85);
   backdrop-filter: blur(15px);
@@ -107,6 +106,7 @@ body::after {
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
+
 #det b { color: #00ff88; font-weight: 700; }
 
 #cache {
@@ -115,14 +115,13 @@ body::after {
   min-height: 20px;
   margin-top: 10px;
 }
+
 #cache.cacheok { color: #00ff88; text-shadow: 0 0 8px rgba(0, 255, 136, 0.5); }
 
-/* ألوان الحالات */
 .ok { color: #00ff88 !important; }
 .bad { color: #ff4466 !important; }
 .warn { color: #ffaa00 !important; }
 
-/* شاشة التحميل (Loader) */
 .loader-wrapper {
   display: flex;
   justify-content: center;
@@ -130,6 +129,7 @@ body::after {
   gap: 8px;
   margin-top: 20px;
 }
+
 .loader-dot {
   width: 10px;
   height: 10px;
@@ -137,6 +137,7 @@ body::after {
   background: #00ff88;
   animation: dotBounce 1.4s infinite ease-in-out both;
 }
+
 .loader-dot:nth-child(1) { animation-delay: -0.32s; background: #00d4ff; }
 .loader-dot:nth-child(2) { animation-delay: -0.16s; background: #00ff88; }
 .loader-dot:nth-child(3) { animation-delay: 0s; background: #b026ff; }
@@ -145,6 +146,7 @@ body::after {
   0%, 80%, 100% { transform: scale(0.5); opacity: 0.4; }
   40% { transform: scale(1.2); opacity: 1; }
 }
+
 @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -201,7 +203,6 @@ body::after {
     var params = new URLSearchParams(location.search);
     var key = null, fwnum = null;
     
-    // كشف الإصدار من متصفح PS4
     var m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
     if (m) {
         var minor = parseInt(m[2], 16);
@@ -238,7 +239,6 @@ body::after {
         return; 
     }
 
-    // التوجيه للملفات الصحيحة
     var target = (bug === "lapse" ? "run_lapse.html" : "PS4_13.00_Webkit.html") + location.search;
     
     function go() { 
