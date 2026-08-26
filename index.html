@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HAMDON.COM | PS4 Jailbreak 13.xx</title>
+<title>HAMDON.COM | PS4 Jailbreak Host</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;700;900&display=swap');
 
@@ -21,7 +21,7 @@ html, body {
   min-height: 100vh;
   background: var(--dark-bg);
   color: #e0e8f0;
-  font-family: 'Cairo', 'Segoe UI', sans-serif;
+  font-family: 'Cairo', system-ui, sans-serif;
   overflow-x: hidden;
   position: relative;
 }
@@ -189,15 +189,14 @@ body::after {
   color: var(--neon-green);
   font-family: 'Orbitron', sans-serif;
   letter-spacing: 1px;
-  min-height: 36px;
 }
 
 .status-text.detecting { color: var(--neon-blue); }
 .status-text.success { color: var(--neon-green); }
 .status-text.error { color: #ff4466; }
 .status-text.warning { color: #ffaa00; }
-.status-text.caching { color: var(--neon-purple); }
 
+/* شريط التقدم المئوي */
 .progress-container {
   margin-top: 20px;
   background: rgba(0, 0, 0, 0.3);
@@ -264,6 +263,7 @@ body::after {
   letter-spacing: 1px;
 }
 
+/* Info Grid */
 .info-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -306,22 +306,12 @@ body::after {
   font-size: 14px;
   color: rgba(224, 232, 240, 0.8);
   margin-bottom: 24px;
-  min-height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .cache-status.ready {
   background: rgba(0, 255, 136, 0.05);
   border-color: rgba(0, 255, 136, 0.2);
   color: var(--neon-green);
-}
-
-.cache-status.downloading {
-  background: rgba(176, 38, 255, 0.08);
-  border-color: rgba(176, 38, 255, 0.3);
-  color: var(--neon-purple);
 }
 
 .loader-container {
@@ -347,23 +337,6 @@ body::after {
 @keyframes dotPulse {
   0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
   40% { transform: scale(1.2); opacity: 1; }
-}
-
-.tap-hint {
-  margin-top: 20px;
-  padding: 12px;
-  background: rgba(255, 170, 0, 0.1);
-  border: 1px solid rgba(255, 170, 0, 0.3);
-  border-radius: 8px;
-  color: #ffaa00;
-  font-size: 14px;
-  text-align: center;
-  animation: pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
 }
 
 .footer {
@@ -429,7 +402,7 @@ body::after {
     
     <div class="status-box">
       <div id="state" class="status-text detecting">
-        جارٍ تهيئة النظام...
+        جارٍ كشف إصدار النظام...
       </div>
       
       <div class="progress-container">
@@ -458,22 +431,12 @@ body::after {
       جاري التحقق من التخزين المؤقت...
     </div>
 
-    <div id="tapHint" class="tap-hint" style="display: none;">
-      ⚡ اضغط على الشاشة أو زر X للمتابعة ⚡
-    </div>
-
-    <div class="loader-container">
-      <div class="loader-dot"></div>
-      <div class="loader-dot"></div>
-      <div class="loader-dot"></div>
-    </div>
-
   </div>
 
 </div>
 
 <div class="footer">
-  <span></span> HAMDON.COM <span></span> PS4 JAILBREAK HOST
+  <span></span> HAMDON.COM <span>⚡</span> PS4 JAILBREAK HOST
 </div>
 
 <div id="out-container">
@@ -489,34 +452,23 @@ body::after {
     var progressBar = document.getElementById("progressBar");
     var progressPercent = document.getElementById("progressPercent");
     var progressLabel = document.getElementById("progressLabel");
-    var tapHint = document.getElementById("tapHint");
 
     function setState(t, c) { 
         stateEl.textContent = t; 
         stateEl.className = "status-text " + (c || "detecting"); 
     }
 
-    function setCache(t, ok, extra) { 
+    function setCache(t, ok) { 
         cacheEl.textContent = t; 
-        cacheEl.className = "cache-status" + (ok ? " ready" : "") + (extra ? " " + extra : ""); 
+        cacheEl.className = "cache-status" + (ok ? " ready" : ""); 
     }
 
     function updateProgress(percent, label) {
         progressBar.style.width = percent + "%";
-        progressPercent.textContent = Math.floor(percent) + "%";
+        progressPercent.textContent = percent + "%";
         if (label) progressLabel.textContent = label;
     }
 
-    function showTapHint(msg) {
-        tapHint.textContent = msg;
-        tapHint.style.display = "block";
-    }
-
-    function hideTapHint() {
-        tapHint.style.display = "none";
-    }
-
-    // كشف الإصدار
     var params = new URLSearchParams(location.search);
     var key = null, fwnum = null;
     var m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
@@ -531,14 +483,14 @@ body::after {
         fwnum = parseInt(m[1], 10) * 100 + parseInt(ms, 10);
     }
 
-    updateProgress(20, "تم كشف الإصدار");
+    updateProgress(25, "تم كشف الإصدار");
 
     var bug = null, why = "";
     var forced = params.get("bug");
 
     if (forced === "lapse" || forced === "poops") {
         bug = forced;
-        why = "تم التحديد يدوياً: " + forced;
+        why = "forced via ?bug=" + forced;
     } else if (!key) {
         why = "هذا المتصفح ليس PlayStation 4";
         fwEl.textContent = "غير معروف";
@@ -564,107 +516,93 @@ body::after {
     fwEl.textContent = key || "غير معروف";
     bugEl.textContent = bug ? bug.toUpperCase() : "لا يوجد";
 
+    updateProgress(50, "جارٍ تحميل " + bug + "...");
+
+    if (!bug) {
+        setState("نسخة غير مدعومة", "error");
+        updateProgress(100, "فشل");
+        return;
+    }
+
     var target = (bug === "lapse" ? "run_lapse.html" : "PS4_13.00_Webkit.html") + location.search;
 
     function go() {
-        updateProgress(100, "اكتمل");
+        updateProgress(75, "جارٍ التوجيه...");
         setState("جارٍ تحميل " + bug + "...", "warning");
-        hideTapHint();
         setTimeout(function() {
+            updateProgress(100, "اكتمل");
             location.replace(target);
         }, 500);
     }
 
     function waitForTap(msg, action) {
         setState(msg, "warning");
-        showTapHint("⚡ اضغط على الشاشة أو زر X للمتابعة ");
+        updateProgress(90, "اضغط للمتابعة");
         function fire() {
             window.removeEventListener("click", fire);
             window.removeEventListener("keydown", fire);
-            hideTapHint();
             action();
         }
         window.addEventListener("click", fire);
         window.addEventListener("keydown", fire);
     }
 
-    // نظام AppCache
     var ac = window.applicationCache;
-    
+
     if (!ac || !document.documentElement.hasAttribute("manifest")) {
-        // لا يوجد AppCache - تشغيل مباشر
-        setCache("وضع بدون Cache - تشغيل مباشر", true);
-        updateProgress(90, "جاهز");
         go();
     } else if (!navigator.onLine) {
-        // أوفلاين - تشغيل من الـ Cache
-        setCache("✓ أوفلاين - التشغيل من الذاكرة المؤقتة", true);
-        updateProgress(95, "أوفلاين");
+        setCache("غير متصل — التشغيل من التخزين المؤقت", true);
+        updateProgress(80, "أوفلاين");
         go();
     } else if (ac.status === ac.IDLE) {
-        // Cache جاهز
-        setCache("✓ التخزين المؤقت جاهز - يمكن العمل أوفلاين", true);
-        updateProgress(95, "جاهز");
+        setCache("التخزين المؤقت جاهز", true);
+        updateProgress(85, "جاهز");
         go();
     } else if (ac.status === ac.UPDATEREADY) {
-        // تحديث جاهز
         try { ac.swapCache(); } catch (e) {}
-        setCache("✓ تم تحميل التحديث - اضغط للمتابعة", true);
+        setCache("تم تحميل التحديث", true);
         updateProgress(95, "تحديث جاهز");
-        waitForTap("تم تحميل التحديث - اضغط للمتابعة", function () { 
-            location.reload(); 
-        });
+        waitForTap("تحديث جاهز — اضغط للمتابعة", function () { location.reload(); });
     } else {
-        // جاري التحميل
-        setCache("جارٍ تنزيل الملفات للعمل أوفلاين...", false, "downloading");
-        updateProgress(50, "جاري التخزين...");
-        
+        setCache("جارٍ التحقق من التخزين المؤقت...");
+        updateProgress(60, "جارٍ التخزين...");
         ac.addEventListener("downloading", function () { 
-            setCache("⬇ جارٍ تنزيل الملفات للمرة الأولى...", false, "downloading");
-            updateProgress(60, "بدء التنزيل...");
+            setCache("جارٍ التخزين للمرة الأولى..."); 
+            updateProgress(70, "تخزين...");
         }, false);
-        
         ac.addEventListener("progress", function (e) {
             if (e && e.total) {
                 var pct = Math.round((e.loaded / e.total) * 100);
-                setCache("⬇ تنزيل " + pct + "% - " + e.loaded + " / " + e.total + " بايت", false, "downloading");
-                updateProgress(60 + (pct * 0.35), "تنزيل " + pct + "%");
-            } else if (e && e.loaded) {
-                setCache("⬇ تنزيل... " + e.loaded + " بايت", false, "downloading");
+                setCache("تخزين " + pct + "%");
+                updateProgress(60 + (pct * 0.3), "تخزين " + pct + "%");
             }
         }, false);
-        
         ac.addEventListener("cached", function () {
-            setCache("✓ اكتمل التنزيل - الموقع جاهز للعمل أوفلاين!", true);
-            updateProgress(100, "اكتمل التخزين");
-            waitForTap("✓ تم التخزين بنجاح! اضغط للتشغيل", go);
+            setCache("تم التخزين — جاهز للاستخدام دون اتصال", true);
+            updateProgress(90, "اكتمل التخزين");
+            waitForTap("جاهز — اضغط للتشغيل", go);
         }, false);
-        
         ac.addEventListener("updateready", function () {
             try { ac.swapCache(); } catch (e) {}
-            setCache("✓ تم تحميل التحديث - اضغط لإعادة التحميل", true);
-            updateProgress(100, "تحديث جاهز");
-            waitForTap("✓ تحديث جاهز - اضغط لإعادة التحميل", function () { 
-                location.reload(); 
-            });
+            setCache("التحديث جاهز", true);
+            updateProgress(95, "تحديث جاهز");
+            waitForTap("تحديث جاهز — اضغط لإعادة التحميل", function () { location.reload(); });
         }, false);
-        
         ac.addEventListener("noupdate", function () {
-            setCache("✓ التخزين المؤقت محدّث وجاهز", true);
-            updateProgress(95, "محدّث");
+            setCache("التخزين المؤقت جاهز", true);
+            updateProgress(85, "جاهز");
             go();
         }, false);
-        
         ac.addEventListener("error", function () {
-            setCache("⚠ فشل التخزين المؤقت - تشغيل بدون Cache", false);
-            updateProgress(80, "خطأ في Cache");
-            waitForTap(" فشل التخزين - اضغط للتشغيل بدون Cache", go);
+            setCache("فشل التخزين المؤقت");
+            updateProgress(80, "خطأ في التخزين");
+            waitForTap("فشل التخزين — اضغط للمتابعة", go);
         }, false);
-        
         ac.addEventListener("obsolete", function () {
-            setCache("⚠ Cache قديم - جاري التحديث...", false);
-            updateProgress(70, "تحديث Cache");
-            waitForTap("⚠ Cache قديم - اضغط للتحديث والتشغيل", go);
+            setCache("التخزين المؤقت قديم");
+            updateProgress(80, "كاش قديم");
+            waitForTap("التخزين قديم — اضغط للتشغيل", go);
         }, false);
     }
 })();
