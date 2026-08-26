@@ -1,223 +1,402 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" manifest="cache.appcache">
+<html lang="ar" manifest="cache.appcache">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>HAMDON.COM - PS4 GoldHEN 13.xx</title>
-    <style>
-        html, body { 
-            margin:0; 
-            padding:0; 
-            background:#0b0d10; 
-            color:#c8ced8;
-            font:15px/1.45 "Segoe UI", system-ui, sans-serif; 
-        }
-        #loadingScreen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #0b0d10; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 9999;
-        }
-        #loadingScreen.hidden { display: none; }
-        #loadingScreen img { 
-            width: 200px; height: 200px; border-radius: 50%; margin-bottom: 30px;
-            border: 3px solid #1e2732; box-shadow: 0 0 30px rgba(127, 208, 160, 0.3);
-            object-fit: cover;
-        }
-        #loadingText { font-size: 24px; font-weight: 700; color: #7fd0a0; margin-bottom: 20px; text-align: center; }
-        #loadingProgress { font-size: 14px; color: #8b95a3; text-align: center; }
-        #loadingDots::after { content: ''; animation: dots 1.5s steps(4, end) infinite; }
-        @keyframes dots { 0%, 20% { content: ''; } 40% { content: '.'; } 60% { content: '..'; } 80%, 100% { content: '...'; } }
-        
-        #mainContent { display: none; }
-        #brand { text-align: center; padding: 20px 10px; background: linear-gradient(180deg, #0e1116 0%, #1a1f2e 100%); border-bottom: 2px solid #1e2732; }
-        #brand img { width: 80px; height: 80px; margin-bottom: 15px; border-radius: 50%; border: 3px solid #7fd0a0; box-shadow: 0 0 20px rgba(127, 208, 160, 0.4); object-fit: cover; }
-        #brand b { font-size: 28px; font-weight: 700; letter-spacing: 0.2em; color: #e6ebf2; display: block; }
-        #wrap { padding: 30px 20px; max-width: 600px; margin: 0 auto; }
-        #state { font-size: 26px; font-weight: 700; margin: 0 0 15px; text-align: center; }
-        #det { font-size: 15px; color: #8b95a3; margin: 0 0 10px; text-align: center; line-height: 1.8; }
-        #det b { color: #7fd0a0; font-weight: 600; }
-        #cache { font-size: 13px; color: #5c6672; margin: 0 0 20px; min-height: 20px; text-align: center; }
-        #cache.cacheok { color: #7fd0a0; }
-        .ok { color: #7fd0a0; } .bad { color: #d08a7f; } .warn { color: #d8c07f; }
-        
-        .action-btn { display: inline-block; padding: 15px 40px; background: #7fd0a0; color: #0b0d10; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px; margin-top: 20px; cursor: pointer; border: none; transition: all 0.3s ease; }
-        .action-btn:hover { background: #6bc090; transform: translateY(-2px); box-shadow: 0 5px 20px rgba(127, 208, 160, 0.4); }
-        .restart-btn { background: #d08a7f; margin-right: 10px; }
-        .restart-btn:hover { background: #c07a6f; box-shadow: 0 5px 20px rgba(208, 138, 127, 0.4); }
-        .button-container { text-align: center; margin-top: 30px; }
-        .error-box { background: rgba(208, 138, 127, 0.1); border: 2px solid #d08a7f; border-radius: 10px; padding: 20px; margin-top: 20px; text-align: center; }
-        .error-box h3 { color: #d08a7f; margin: 0 0 10px 0; font-size: 20px; }
-        .error-box p { color: #8b95a3; margin: 5px 0; }
-    </style>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>HAMDON.COM - PS4 Jailbreak GoldHEN 13.xx</title>
+
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100vh;
+  background: #05070c;
+  color: #e8edf5;
+  font: 18px/1.6 "Segoe UI", "Tahoma", system-ui, -apple-system, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url('logo_raw.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.88;
+  z-index: 0;
+  filter: brightness(0.62) contrast(1.08);
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(127, 208, 160, 0.08), rgba(0, 0, 0, 0.58));
+  z-index: 0;
+  pointer-events: none;
+}
+
+#container {
+  width: 100%;
+  max-width: 920px;
+  padding: 38px 34px 42px;
+  margin: 20px;
+  background: rgba(10, 15, 24, 0.80);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 42px;
+  border: 1px solid rgba(127, 208, 160, 0.18);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 60px rgba(127, 208, 160, 0.08);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+#main-header {
+  margin-bottom: 32px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid rgba(127, 208, 160, 0.15);
+}
+
+#main-header h1 {
+  font-size: 50px;
+  line-height: 1.2;
+  font-weight: 850;
+  color: #d9ecff;
+  margin-bottom: 12px;
+  letter-spacing: 0;
+  text-shadow: 0 0 5px rgba(127, 208, 160, 0.95), 0 0 14px rgba(127, 208, 160, 0.95), 0 0 30px rgba(127, 208, 160, 0.85), 0 0 60px rgba(127, 208, 160, 0.55);
+  animation: titleGlow 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+  from { text-shadow: 0 0 5px rgba(127, 208, 160, 0.75), 0 0 14px rgba(127, 208, 160, 0.70), 0 0 28px rgba(127, 208, 160, 0.60); }
+  to { text-shadow: 0 0 8px rgba(127, 208, 160, 1), 0 0 20px rgba(127, 208, 160, 1), 0 0 40px rgba(127, 208, 160, 0.90), 0 0 70px rgba(127, 208, 160, 0.65); }
+}
+
+#main-header .sub {
+  font-size: 19px;
+  color: #9ebce0;
+  letter-spacing: 0.8px;
+  font-weight: 500;
+  text-shadow: 0 0 10px rgba(127, 208, 160, 0.4);
+}
+
+#main-header .sub span {
+  color: #c5e0ff;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(127, 208, 160, 0.7);
+}
+
+.card {
+  background: rgba(7, 11, 18, 0.72);
+  border-radius: 34px;
+  padding: 34px 26px 30px;
+  margin: 10px 0 18px;
+  border: 1px solid rgba(127, 208, 160, 0.14);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.55), 0 10px 40px rgba(0, 0, 0, 0.45), 0 0 35px rgba(127, 208, 160, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+#state {
+  display: block;
+  width: 100%;
+  min-height: 72px;
+  padding: 15px 20px;
+  margin: 0 0 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(127, 208, 160, 0.13);
+  font-size: 30px;
+  line-height: 1.4;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: #d8eaff;
+  text-shadow: 0 0 7px rgba(127, 208, 160, 0.75), 0 0 18px rgba(127, 208, 160, 0.45);
+  box-shadow: inset 0 0 20px rgba(127, 208, 160, 0.035), 0 0 25px rgba(127, 208, 160, 0.04);
+}
+
+#det {
+  font-size: 20px;
+  color: #aebfd3;
+  margin: 14px 0 10px;
+  padding: 16px 18px;
+  min-height: 58px;
+  line-height: 1.7;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+#det b {
+  color: #e0f0ff;
+  font-size: 21px;
+  font-weight: 800;
+  background: rgba(127, 208, 160, 0.10);
+  padding: 3px 12px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(127, 208, 160, 0.12);
+}
+
+#det .chip {
+  display: inline-block;
+  background: rgba(127, 208, 160, 0.16);
+  padding: 5px 18px;
+  border-radius: 14px;
+  color: #7fd0a0;
+  font-size: 19px;
+  font-weight: 700;
+  margin: 0 5px;
+  border: 1px solid rgba(127, 208, 160, 0.18);
+  box-shadow: 0 0 12px rgba(127, 208, 160, 0.18);
+  text-shadow: 0 0 8px rgba(127, 208, 160, 0.65);
+}
+
+#cache {
+  font-size: 18px;
+  color: #8192a8;
+  margin: 20px 0 5px;
+  min-height: 34px;
+  padding: 8px 20px;
+  border-radius: 18px;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  text-shadow: 0 0 8px rgba(127, 208, 160, 0.3);
+}
+
+#cache.cacheok {
+  color: #83e0aa;
+  background: rgba(70, 200, 130, 0.08);
+  border-color: rgba(80, 220, 150, 0.18);
+  text-shadow: 0 0 8px rgba(80, 220, 150, 0.55), 0 0 18px rgba(50, 180, 120, 0.35);
+}
+
+.ok { color: #7fd0a0; }
+.bad { color: #f28b82; }
+.warn { color: #fdd663; }
+
+.loading {
+  margin-top: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+}
+
+.loader-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #7fd0a0;
+  box-shadow: 0 0 8px rgba(127, 208, 160, 0.8), 0 0 18px rgba(127, 208, 160, 0.45);
+  animation: dot-bounce 1.2s infinite ease-in-out both;
+}
+
+.loader-dot:nth-child(1) { animation-delay: -0.32s; }
+.loader-dot:nth-child(2) { animation-delay: -0.16s; }
+.loader-dot:nth-child(3) { animation-delay: 0s; }
+
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: scale(0.55); opacity: 0.35; }
+  40% { transform: scale(1.15); opacity: 1; }
+}
+
+.footer-brand {
+  position: fixed;
+  bottom: 16px;
+  right: 24px;
+  z-index: 2;
+  font-size: 13px;
+  color: rgba(127, 208, 160, 0.42);
+  letter-spacing: 0.8px;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(127, 208, 160, 0.35);
+}
+
+@media (max-width: 600px) {
+  #container { padding: 26px 18px 32px; margin: 12px; border-radius: 30px; }
+  #main-header { margin-bottom: 24px; padding-bottom: 18px; }
+  #main-header h1 { font-size: 38px; }
+  #main-header .sub { font-size: 16px; }
+  .card { padding: 24px 15px 24px; border-radius: 26px; }
+  #state { font-size: 24px; min-height: 64px; padding: 12px 14px; }
+  #det { font-size: 17px; padding: 14px 12px; }
+  #det .chip { font-size: 17px; padding: 4px 13px; }
+  #cache { font-size: 16px; }
+  .loader-dot { width: 10px; height: 10px; }
+}
+
+@keyframes pulse-glow {
+  0% { opacity: 0.65; }
+  50% { opacity: 1; }
+  100% { opacity: 0.65; }
+}
+
+.pulse { animation: pulse-glow 2.4s ease-in-out infinite; }
+
+</style>
 </head>
+
 <body>
-    <div id="loadingScreen">
-        <img src="logo_raw.png" alt="HAMDON.COM">
-        <div id="loadingText">جاري التحميل<div id="loadingDots"></div></div>
-        <div id="loadingProgress">جاري فحص النظام...</div>
-    </div>
 
-    <div id="mainContent">
-        <div id="brand">
-            <img src="logo_raw.png" alt="HAMDON.COM">
-            <b>HAMDON.COM</b>
-        </div>
-        <div id="wrap">
-            <div id="state">GoldHEN للإصدار 13.xx</div>
-            <div id="det"></div>
-            <div id="cache"></div>
-            <div id="errorContainer"></div>
-            <div class="button-container" id="buttonContainer" style="display: none;">
-                <button class="action-btn" onclick="retryExploit()">إعادة المحاولة</button>
-                <button class="action-btn restart-btn" onclick="restartPS4()">إعادة تشغيل الجهاز</button>
-            </div>
-        </div>
-    </div>
+<div id="container">
 
-    <script>
-        (function () {
-            var loadingScreen = document.getElementById("loadingScreen");
-            var loadingProgress = document.getElementById("loadingProgress");
-            var mainContent = document.getElementById("mainContent");
-            var stateEl = document.getElementById("state");
-            var detEl = document.getElementById("det");
-            var cacheEl = document.getElementById("cache");
-            var errorContainer = document.getElementById("errorContainer");
-            var buttonContainer = document.getElementById("buttonContainer");
-            
-            function setState(t, c) { stateEl.textContent = t; stateEl.className = c || ""; }
-            function setCache(t, ok) { cacheEl.textContent = t; cacheEl.className = ok ? "cacheok" : ""; }
-            function updateLoadingProgress(text) { loadingProgress.textContent = text; }
-            
-            function showMainContent() {
-                setTimeout(function() {
-                    loadingScreen.classList.add("hidden");
-                    mainContent.style.display = "block";
-                }, 1500);
-            }
-            
-            function showError(message) {
-                errorContainer.innerHTML = '<div class="error-box"><h3>⚠️ فشل العملية</h3><p>' + message + '</p><p style="margin-top: 15px; font-size: 13px;">يمكنك إعادة تشغيل الجهاز والمحاولة مرة أخرى</p></div>';
-                buttonContainer.style.display = "block";
-            }
-            
-            window.retryExploit = function() { location.reload(); };
-            window.restartPS4 = function() {
-                if (confirm("هل تريد إعادة تشغيل الجهاز؟\n\nسيتم إعادة تحميل الصفحة ويمكنك المحاولة مرة أخرى.")) {
-                    window.close();
-                    setTimeout(function() { location.replace("about:blank"); }, 500);
-                    setTimeout(function() { location.reload(); }, 1000);
-                }
-            };
-            
-            var params = new URLSearchParams(location.search);
-            var key = null, fwnum = null;
-            var m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
-            
-            updateLoadingProgress("جاري تحليل المتصفح...");
-            
-            if (m) {
-                var minor = parseInt(m[2], 16);
-                var ms = minor.toString(16);
-                if (ms.length < 2) ms = "0" + ms;
-                key = m[1] + "." + ms;
-                fwnum = parseInt(m[1], 10) * 100 + parseInt(ms, 10);
-            }
-            
-            updateLoadingProgress("جاري التحقق من التوافق مع GoldHEN 13.xx...");
-            
-            var bug = null, why = "";
-            var forced = params.get("bug");
-            
-            if (forced === "goldhen13") {
-                bug = "goldhen13"; why = "تم التحديد يدوياً: GoldHEN 13.xx";
-            } else if (!key) {
-                why = "المتصفح ليس PlayStation 4";
-            } else if (fwnum >= 1300 && fwnum < 1400) {
-                bug = "goldhen13"; why = key + " - متوافق مع GoldHEN 13.xx";
-            } else if (fwnum < 1300) {
-                why = key + " - الإصدار أقدم من 13.xx، يرجى تحديث الجهاز";
-            } else {
-                why = key + " - الإصدار أحدث من 13.xx، قد لا يكون متوافقاً";
-            }
-            
-            detEl.innerHTML = "الإصدار: <b>" + (key || "غير معروف") + "</b><br>" +
-                "الأداة: <b>GoldHEN 13.xx</b><br>" +
-                "الحالة: <b>" + (bug ? "متوافق ✓" : "غير متوافق ✗") + "</b><br>" + why;
-            
-            if (!bug) { 
-                setState("الإصدار غير مدعوم", "bad"); 
-                showError("جهازك لا يدعم GoldHEN للإصدار 13.xx<br>تأكد من أن إصدار النظام بين 13.00 و 13.99");
-                showMainContent();
-                return; 
-            }
-            
-            var target = "run_goldhen13.html" + location.search;
-            
-            function go() { 
-                setState("جاري تحميل GoldHEN...", "warn");
-                updateLoadingProgress("جاري التوجيه إلى GoldHEN...");
-                setTimeout(function() {
-                    var exploitSuccess = false; 
-                    if (!exploitSuccess) {
-                        setState("فشل التحميل", "bad");
-                        showError("فشل في تحميل GoldHEN<br>يرجى إعادة تشغيل الجهاز والمحاولة مرة أخرى");
-                    } else {
-                        location.replace(target);
-                    }
-                }, 2000);
-            }
-            
-            function waitForTap(msg, action) {
-                setState(msg, "warn");
-                function fire() {
-                    window.removeEventListener("click", fire);
-                    window.removeEventListener("keydown", fire);
-                    action();
-                }
-                window.addEventListener("click", fire);
-                window.addEventListener("keydown", fire);
-            }
-            
-            var ac = window.applicationCache;
-            if (!ac || !document.documentElement.hasAttribute("manifest")) {
-                showMainContent(); go();
-            } else if (!navigator.onLine) {
-                setCache("وضع غير متصل -- من الذاكرة المؤقتة", true); showMainContent(); go();
-            } else if (ac.status === ac.IDLE) {
-                setCache("مخزن مؤقت", true); showMainContent(); go();
-            } else if (ac.status === ac.UPDATEREADY) {
-                try { ac.swapCache(); } catch (e) {}
-                setCache("تم تحميل التحديث", true); showMainContent();
-                waitForTap("التحديث جاهز -- اضغط للمتابعة", function () { location.reload(); });
-            } else {
-                setCache("جاري فحص الذاكرة المؤقتة...");
-                ac.addEventListener("downloading", function () { setCache("جاري التخزين للاستخدام غير المتصل..."); }, false);
-                ac.addEventListener("progress", function (e) {
-                    if (e && e.total) setCache("جاري التخزين " + Math.round((e.loaded / e.total) * 100) + "%");
-                }, false);
-                ac.addEventListener("cached", function () {
-                    setCache("تم التخزين للاستخدام غير المتصل", true); showMainContent();
-                    waitForTap("تم التخزين -- اضغط للبدء", go);
-                }, false);
-                ac.addEventListener("updateready", function () {
-                    try { ac.swapCache(); } catch (e) {}
-                    setCache("تم تحميل التحديث", true); showMainContent();
-                    waitForTap("التحديث جاهز -- اضغط لإعادة التشغيل", function () { location.reload(); });
-                }, false);
-                ac.addEventListener("noupdate", function () {
-                    setCache("مخزن -- جاهز للاستخدام", true); showMainContent(); go();
-                }, false);
-                ac.addEventListener("error", function () {
-                    setCache("الذاكرة المؤقتة غير متاحة"); showMainContent();
-                    waitForTap("فشل التخزين -- اضغط للمتابعة", go);
-                }, false);
-                ac.addEventListener("obsolete", function () {
-                    setCache("الذاكرة المؤقتة قديمة"); showMainContent();
-                    waitForTap("الذاكرة قديمة -- اضغط للتشغيل", go);
-                }, false);
-            }
-        })();
-    </script>
+  <div id="main-header">
+    <h1>HAMDON.COM</h1>
+    <div class="sub">
+      <span>PS4</span>
+      &bull;
+      GoldHEN 13.xx Jailbreak
+    </div>
+  </div>
+
+  <div class="card">
+    <div id="state">جارٍ كشف النسخة...</div>
+    <div id="det"></div>
+    <div id="cache"></div>
+    <div class="loading">
+      <span class="loader-dot"></span>
+      <span class="loader-dot"></span>
+      <span class="loader-dot"></span>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-brand">HAMDON PS4 TOOL</div>
+
+<script>
+
+(function () {
+    var stateEl = document.getElementById("state");
+    var detEl = document.getElementById("det");
+    var cacheEl = document.getElementById("cache");
+
+    function setState(t, c) { stateEl.innerHTML = t; stateEl.className = c || ""; }
+    function setCache(t, ok) { cacheEl.textContent = t; cacheEl.className = ok ? "cacheok" : ""; }
+
+    var params = new URLSearchParams(location.search);
+    var key = null, fwnum = null;
+    var m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
+
+    if (m) {
+        var minor = parseInt(m[2], 16);
+        var ms = minor.toString(16);
+        if (ms.length < 2) ms = "0" + ms;
+        key = m[1] + "." + ms;
+        fwnum = parseInt(m[1], 10) * 100 + parseInt(ms, 10);
+    }
+
+    var bug = null, why = "";
+    var forced = params.get("bug");
+
+    if (forced === "lapse" || forced === "poops") {
+        bug = forced;
+        why = "تم التحديد يدوياً ?bug=" + forced;
+    } else if (!key) {
+        why = "هذا المتصفح ليس بلايستيشن 4";
+    } else if (fwnum <= 1202) {
+        bug = "lapse";
+        why = key + " — متوافق (Lapse)";
+    } else if (fwnum >= 1250) {
+        bug = "poops";
+        why = key + " — متوافق (Poops)";
+    } else {
+        why = key + " — غير مدعوم";
+    }
+
+    var fwDisplay = key ? "<b>" + key + "</b>" : "<span style='color:#8f9eb0;'>غير معروف</span>";
+    var bugDisplay = bug ? "<span class='chip'>" + bug.toUpperCase() + "</span>" : "<span style='color:#8f9eb0;'>لا يوجد</span>";
+
+    detEl.innerHTML = "النظام " + fwDisplay + " &nbsp;•&nbsp; " + "الثغرة " + bugDisplay + " &nbsp;•&nbsp; " + why;
+
+    if (!bug) {
+        setState("نسخة غير مدعومة", "bad");
+        return;
+    }
+
+    var target = (bug === "lapse" ? "run_lapse.html" : "run_poops.html") + location.search;
+
+    function go() {
+        setState("جارٍ تحميل " + bug + " ...", "warn");
+        location.replace(target);
+    }
+
+    function waitForTap(msg, action) {
+        setState(msg, "warn");
+        function fire() {
+            window.removeEventListener("click", fire);
+            window.removeEventListener("keydown", fire);
+            action();
+        }
+        window.addEventListener("click", fire);
+        window.addEventListener("keydown", fire);
+    }
+
+    var ac = window.applicationCache;
+
+    if (!ac || !document.documentElement.hasAttribute("manifest")) {
+        go();
+    } else if (!navigator.onLine) {
+        setCache("غير متصل — التشغيل من التخزين المؤقت", true);
+        go();
+    } else if (ac.status === ac.IDLE) {
+        setCache("التخزين المؤقت جاهز", true);
+        go();
+    } else if (ac.status === ac.UPDATEREADY) {
+        try { ac.swapCache(); } catch (e) {}
+        setCache("تم تحميل التحديث", true);
+        waitForTap("تحديث جاهز — اضغط للتحديث والتشغيل", function () { location.reload(); });
+    } else {
+        setCache("جارٍ التحقق من التخزين المؤقت...");
+        ac.addEventListener("downloading", function () { setCache("التخزين المؤقت للمرة الأولى..."); }, false);
+        ac.addEventListener("progress", function (e) {
+            if (e && e.total) setCache("تخزين " + Math.round((e.loaded / e.total) * 100) + "%");
+        }, false);
+        ac.addEventListener("cached", function () {
+            setCache("تم التخزين المؤقت — جاهز للاستخدام دون اتصال", true);
+            waitForTap("جاهز — اضغط للتشغيل", go);
+        }, false);
+        ac.addEventListener("updateready", function () {
+            try { ac.swapCache(); } catch (e) {}
+            setCache("التحديث جاهز", true);
+            waitForTap("تحديث جاهز — اضغط لإعادة التحميل", function () { location.reload(); });
+        }, false);
+        ac.addEventListener("noupdate", function () {
+            setCache("التخزين المؤقت جاهز", true);
+            go();
+        }, false);
+        ac.addEventListener("error", function () {
+            setCache("فشل التخزين المؤقت");
+            waitForTap("فشل التخزين — اضغط للتشغيل رغم ذلك", go);
+        }, false);
+        ac.addEventListener("obsolete", function () {
+            setCache("التخزين المؤقت قديم");
+            waitForTap("التخزين قديم — اضغط للتشغيل", go);
+        }, false);
+    }
+})();
+
+</script>
+
 </body>
 </html>
