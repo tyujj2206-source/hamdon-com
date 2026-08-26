@@ -5,21 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HAMDON.COM | Lapse Chain</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@700&display=swap');
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-:root {
-  --neon-green: #00ff88;
-  --neon-blue: #00d4ff;
-  --dark-bg: #0a0e1a;
-  --card-bg: rgba(15, 20, 35, 0.9);
-}
-
 html, body {
   min-height: 100vh;
-  background: var(--dark-bg);
-  color: #e0e8f0;
+  background: #05070c;
+  color: #e8edf5;
   font-family: 'Cairo', sans-serif;
   position: relative;
   overflow: hidden;
@@ -29,20 +22,19 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: 
-    radial-gradient(circle at 30% 40%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 70% 60%, rgba(0, 212, 255, 0.08) 0%, transparent 50%);
+  background-image: url('logo_hamdon.png');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.15;
   z-index: 0;
+  filter: blur(8px);
 }
 
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: 
-    linear-gradient(rgba(0, 255, 136, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 136, 0.02) 1px, transparent 1px);
-  background-size: 40px 40px;
+  background: radial-gradient(circle at center, rgba(0, 255, 136, 0.05), rgba(0, 0, 0, 0.8));
   z-index: 0;
   pointer-events: none;
 }
@@ -73,7 +65,7 @@ body::after {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  border: 2px solid var(--neon-green);
+  border: 2px solid #00ff88;
   box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
   margin-bottom: 16px;
 }
@@ -82,7 +74,7 @@ body::after {
   font-family: 'Orbitron', sans-serif;
   font-size: 36px;
   font-weight: 900;
-  background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
+  background: linear-gradient(135deg, #00ff88, #00d4ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -98,7 +90,7 @@ body::after {
 }
 
 .card {
-  background: var(--card-bg);
+  background: rgba(15, 20, 35, 0.85);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(0, 255, 136, 0.2);
   border-radius: 20px;
@@ -126,7 +118,7 @@ body::after {
 .status-text {
   font-size: 20px;
   font-weight: 700;
-  color: var(--neon-green);
+  color: #00ff88;
   font-family: 'Orbitron', sans-serif;
 }
 
@@ -141,11 +133,11 @@ body::after {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--neon-green);
+  background: #00ff88;
   animation: pulse 1.4s ease-in-out infinite;
 }
 
-.dot:nth-child(2) { animation-delay: 0.2s; background: var(--neon-blue); }
+.dot:nth-child(2) { animation-delay: 0.2s; background: #00d4ff; }
 .dot:nth-child(3) { animation-delay: 0.4s; }
 
 @keyframes pulse {
@@ -173,7 +165,7 @@ body::after {
   padding: 12px;
   max-height: 400px;
   overflow-y: auto;
-  color: var(--neon-green);
+  color: #00ff88;
 }
 
 .footer {
@@ -182,7 +174,7 @@ body::after {
   left: 50%;
   transform: translateX(-50%);
   font-size: 11px;
-  color: rgba(224, 232, 240, 0.4);
+  color: rgba(255, 255, 255, 0.3);
   letter-spacing: 2px;
   font-family: 'Orbitron', sans-serif;
   z-index: 2;
@@ -199,7 +191,7 @@ body::after {
 <div id="wrap">
   
   <div class="header">
-    <img src="logo_raw.png" alt="HAMDON" class="logo">
+    <img src="logo_hamdon.png" alt="HAMDON" class="logo">
     <h1 class="title">HAMDON.COM</h1>
     <p class="subtitle">Lapse Chain • Firmware ≤ 12.02</p>
   </div>
@@ -219,7 +211,7 @@ body::after {
 
 </div>
 
-<div class="footer">⚡ HAMDON.COM • LAPSE EXPLOIT ⚡</div>
+<div class="footer"> HAMDON.COM • LAPSE EXPLOIT ⚡</div>
 
 <div id="out-container">
   <div id="out"></div>
