@@ -21,7 +21,7 @@ html, body {
   overflow: hidden;
 }
 
-/* خلفية متحركة */
+/* خلفية متحركة بالصورة الجديدة */
 body::before {
   content: '';
   position: fixed;
@@ -59,18 +59,19 @@ body::after {
   margin-bottom: 30px;
   animation: fadeInDown 0.8s ease-out;
 }
-#brand img {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
+#brand img { 
+  width: 100px; 
+  height: 100px; 
+  border-radius: 50%; 
   border: 3px solid #00ff88;
   box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
   margin-bottom: 15px;
+  object-fit: cover;
 }
 #brand b {
   display: block;
   font-family: 'Orbitron', sans-serif;
-  font-size: 32px;
+  font-size: 36px;
   letter-spacing: 3px;
   color: #00ff88;
   text-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
@@ -80,6 +81,7 @@ body::after {
 .card {
   background: rgba(15, 20, 35, 0.85);
   backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   border: 1px solid rgba(0, 255, 136, 0.2);
   border-radius: 24px;
   padding: 30px 25px;
@@ -162,7 +164,7 @@ body::after {
 
 <div id="container">
   <div id="brand">
-    <img src="logo_raw.png" alt="HAMDON.COM" width="90" height="90">
+    <img src="logo_hamdon.png" alt="HAMDON.COM" width="100" height="100">
     <b>HAMDON.COM</b>
   </div>
 
@@ -236,11 +238,11 @@ body::after {
         return; 
     }
 
-    var target = (bug === "lapse" ? "run_lapse.html" : "run_poops.html") + location.search;
+    // التوجيه للملفات الصحيحة
+    var target = (bug === "lapse" ? "run_lapse.html" : "PS4_13.00_Webkit.html") + location.search;
     
     function go() { 
         setState("جارٍ تحميل سلسلة " + bug + "...", "warn");
-        // تأخير بسيط جداً لإظهار حالة التحميل للمستخدم قبل التوجيه
         setTimeout(function() { location.replace(target); }, 800); 
     }
 
@@ -267,7 +269,7 @@ body::after {
     } else if (ac.status === ac.UPDATEREADY) {
         try { ac.swapCache(); } catch (e) {}
         setCache("تم تحميل التحديث", true);
-        waitForTap("التحديث جاهز — اضغط X أو المس للمتابعة", function () { location.reload(); });
+        waitForTap("التحديث جاهز — اضغط للمتابعة", function () { location.reload(); });
     } else {
         setCache("جارٍ التحقق من الذاكرة المؤقتة...");
         ac.addEventListener("downloading", function () { setCache("جارٍ التخزين للمرة الأولى..."); }, false);
@@ -276,7 +278,7 @@ body::after {
         }, false);
         ac.addEventListener("cached", function () {
             setCache("تم التخزين — جاهز للاستخدام دون اتصال", true);
-            waitForTap("جاهز — اضغط X أو المس للتشغيل", go);
+            waitForTap("جاهز — اضغط للتشغيل", go);
         }, false);
         ac.addEventListener("updateready", function () {
             try { ac.swapCache(); } catch (e) {}
