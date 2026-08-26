@@ -1,298 +1,442 @@
 <!DOCTYPE html>
-<html lang="ar" manifest="cache.appcache">
+<html lang="ar" dir="rtl" manifest="cache.appcache">
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>HAMDON.COM - PS4 Jailbreak GoldHEN 13.xx</title>
-
+<title>HAMDON.COM | PS4 Jailbreak 13.xx</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;700;900&display=swap');
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --neon-green: #00ff88;
+  --neon-blue: #00d4ff;
+  --neon-purple: #b026ff;
+  --dark-bg: #0a0e1a;
+  --card-bg: rgba(15, 20, 35, 0.85);
 }
 
-html,
-body {
+html, body {
   min-height: 100vh;
-  background: #05070c;
-  color: #e8edf5;
-  font: 18px/1.6 "Segoe UI", "Tahoma", system-ui, -apple-system, sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: var(--dark-bg);
+  color: #e0e8f0;
+  font-family: 'Cairo', 'Segoe UI', sans-serif;
+  overflow-x: hidden;
   position: relative;
-  overflow: hidden;
 }
 
+/* Animated Background */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url('logo_raw.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.88;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(176, 38, 255, 0.06) 0%, transparent 50%);
   z-index: 0;
-  filter: brightness(0.62) contrast(1.08);
+  animation: bgPulse 8s ease-in-out infinite alternate;
 }
 
+@keyframes bgPulse {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+/* Grid Overlay */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(127, 208, 160, 0.08), rgba(0, 0, 0, 0.58));
+  background-image: 
+    linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
   z-index: 0;
   pointer-events: none;
 }
 
+/* Scanline Effect */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.1) 2px,
+    rgba(0, 0, 0, 0.1) 4px
+  );
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+/* Main Container */
 #container {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Logo Section */
+.logo-section {
+  text-align: center;
+  margin-bottom: 40px;
+  animation: fadeInDown 1s ease-out;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.logo-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid var(--neon-green);
+  box-shadow: 
+    0 0 20px rgba(0, 255, 136, 0.5),
+    0 0 40px rgba(0, 255, 136, 0.3),
+    inset 0 0 20px rgba(0, 255, 136, 0.2);
+  margin-bottom: 20px;
+  animation: logoGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes logoGlow {
+  0% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.5), 0 0 40px rgba(0, 255, 136, 0.3); }
+  100% { box-shadow: 0 0 30px rgba(0, 255, 136, 0.8), 0 0 60px rgba(0, 255, 136, 0.5); }
+}
+
+.brand-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 48px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--neon-green), var(--neon-blue), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 4px;
+  text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+  animation: textShimmer 3s ease-in-out infinite;
+}
+
+@keyframes textShimmer {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.3); }
+}
+
+.tagline {
+  font-size: 16px;
+  color: rgba(224, 232, 240, 0.7);
+  margin-top: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Main Card */
+.main-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 24px;
+  padding: 40px;
+  max-width: 700px;
   width: 100%;
-  max-width: 920px;
-  padding: 38px 34px 42px;
-  margin: 20px;
-  background: rgba(10, 15, 24, 0.80);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border-radius: 42px;
-  border: 1px solid rgba(127, 208, 160, 0.18);
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 60px rgba(127, 208, 160, 0.08);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(0, 255, 136, 0.1);
+  animation: fadeInUp 1s ease-out 0.3s both;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.main-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon-green), var(--neon-blue), transparent);
+  animation: scanLine 3s linear infinite;
+}
+
+@keyframes scanLine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Status Display */
+.status-box {
+  background: rgba(0, 255, 136, 0.05);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
   text-align: center;
   position: relative;
-  z-index: 1;
 }
 
-#main-header {
-  margin-bottom: 32px;
-  padding-bottom: 22px;
-  border-bottom: 1px solid rgba(127, 208, 160, 0.15);
-}
-
-#main-header h1 {
-  font-size: 50px;
-  line-height: 1.2;
-  font-weight: 850;
-  color: #d9ecff;
-  margin-bottom: 12px;
-  letter-spacing: 0;
-  text-shadow: 0 0 5px rgba(127, 208, 160, 0.95), 0 0 14px rgba(127, 208, 160, 0.95), 0 0 30px rgba(127, 208, 160, 0.85), 0 0 60px rgba(127, 208, 160, 0.55);
-  animation: titleGlow 2.8s ease-in-out infinite alternate;
-}
-
-@keyframes titleGlow {
-  from { text-shadow: 0 0 5px rgba(127, 208, 160, 0.75), 0 0 14px rgba(127, 208, 160, 0.70), 0 0 28px rgba(127, 208, 160, 0.60); }
-  to { text-shadow: 0 0 8px rgba(127, 208, 160, 1), 0 0 20px rgba(127, 208, 160, 1), 0 0 40px rgba(127, 208, 160, 0.90), 0 0 70px rgba(127, 208, 160, 0.65); }
-}
-
-#main-header .sub {
-  font-size: 19px;
-  color: #9ebce0;
-  letter-spacing: 0.8px;
-  font-weight: 500;
-  text-shadow: 0 0 10px rgba(127, 208, 160, 0.4);
-}
-
-#main-header .sub span {
-  color: #c5e0ff;
+.status-text {
+  font-size: 24px;
   font-weight: 700;
-  text-shadow: 0 0 8px rgba(127, 208, 160, 0.7);
+  color: var(--neon-green);
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
 }
 
-.card {
-  background: rgba(7, 11, 18, 0.72);
-  border-radius: 34px;
-  padding: 34px 26px 30px;
-  margin: 10px 0 18px;
-  border: 1px solid rgba(127, 208, 160, 0.14);
-  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.55), 0 10px 40px rgba(0, 0, 0, 0.45), 0 0 35px rgba(127, 208, 160, 0.05);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+.status-text.detecting { color: var(--neon-blue); }
+.status-text.success { color: var(--neon-green); }
+.status-text.error { color: #ff4466; }
+.status-text.warning { color: #ffaa00; }
+
+/* Info Grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
-#state {
-  display: block;
-  width: 100%;
-  min-height: 72px;
-  padding: 15px 20px;
-  margin: 0 0 22px;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.045);
-  border: 1px solid rgba(127, 208, 160, 0.13);
-  font-size: 30px;
-  line-height: 1.4;
-  font-weight: 700;
-  letter-spacing: -0.2px;
-  color: #d8eaff;
-  text-shadow: 0 0 7px rgba(127, 208, 160, 0.75), 0 0 18px rgba(127, 208, 160, 0.45);
-  box-shadow: inset 0 0 20px rgba(127, 208, 160, 0.035), 0 0 25px rgba(127, 208, 160, 0.04);
-}
-
-#det {
-  font-size: 20px;
-  color: #aebfd3;
-  margin: 14px 0 10px;
-  padding: 16px 18px;
-  min-height: 58px;
-  line-height: 1.7;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
-}
-
-#det b {
-  color: #e0f0ff;
-  font-size: 21px;
-  font-weight: 800;
-  background: rgba(127, 208, 160, 0.10);
-  padding: 3px 12px;
+.info-item {
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.15);
   border-radius: 12px;
-  box-shadow: 0 0 12px rgba(127, 208, 160, 0.12);
+  padding: 16px;
+  text-align: center;
 }
 
-#det .chip {
-  display: inline-block;
-  background: rgba(127, 208, 160, 0.16);
-  padding: 5px 18px;
-  border-radius: 14px;
-  color: #7fd0a0;
-  font-size: 19px;
-  font-weight: 700;
-  margin: 0 5px;
-  border: 1px solid rgba(127, 208, 160, 0.18);
-  box-shadow: 0 0 12px rgba(127, 208, 160, 0.18);
-  text-shadow: 0 0 8px rgba(127, 208, 160, 0.65);
+.info-label {
+  font-size: 12px;
+  color: rgba(224, 232, 240, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
 }
 
-#cache {
+.info-value {
   font-size: 18px;
-  color: #8192a8;
-  margin: 20px 0 5px;
-  min-height: 34px;
-  padding: 8px 20px;
-  border-radius: 18px;
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  text-shadow: 0 0 8px rgba(127, 208, 160, 0.3);
+  font-weight: 700;
+  color: var(--neon-blue);
+  font-family: 'Orbitron', sans-serif;
 }
 
-#cache.cacheok {
-  color: #83e0aa;
-  background: rgba(70, 200, 130, 0.08);
-  border-color: rgba(80, 220, 150, 0.18);
-  text-shadow: 0 0 8px rgba(80, 220, 150, 0.55), 0 0 18px rgba(50, 180, 120, 0.35);
+.info-value.fw { color: var(--neon-green); }
+.info-value.bug { color: var(--neon-purple); }
+
+/* Cache Status */
+.cache-status {
+  background: rgba(176, 38, 255, 0.05);
+  border: 1px solid rgba(176, 38, 255, 0.15);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(224, 232, 240, 0.8);
+  margin-bottom: 24px;
 }
 
-.ok { color: #7fd0a0; }
-.bad { color: #f28b82; }
-.warn { color: #fdd663; }
+.cache-status.ready {
+  background: rgba(0, 255, 136, 0.05);
+  border-color: rgba(0, 255, 136, 0.2);
+  color: var(--neon-green);
+}
 
-.loading {
-  margin-top: 22px;
+/* Loading Animation */
+.loader-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
+  margin-top: 20px;
 }
 
 .loader-dot {
-  display: inline-block;
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: #7fd0a0;
-  box-shadow: 0 0 8px rgba(127, 208, 160, 0.8), 0 0 18px rgba(127, 208, 160, 0.45);
-  animation: dot-bounce 1.2s infinite ease-in-out both;
+  background: var(--neon-green);
+  animation: dotPulse 1.4s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 
-.loader-dot:nth-child(1) { animation-delay: -0.32s; }
-.loader-dot:nth-child(2) { animation-delay: -0.16s; }
-.loader-dot:nth-child(3) { animation-delay: 0s; }
+.loader-dot:nth-child(2) { animation-delay: 0.2s; background: var(--neon-blue); }
+.loader-dot:nth-child(3) { animation-delay: 0.4s; background: var(--neon-purple); }
 
-@keyframes dot-bounce {
-  0%, 80%, 100% { transform: scale(0.55); opacity: 0.35; }
-  40% { transform: scale(1.15); opacity: 1; }
+@keyframes dotPulse {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1.2); opacity: 1; }
 }
 
-.footer-brand {
+/* Progress Bar */
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--neon-green), var(--neon-blue));
+  border-radius: 2px;
+  animation: progressLoad 2s ease-in-out infinite;
+  transform-origin: left;
+}
+
+@keyframes progressLoad {
+  0% { width: 0%; }
+  50% { width: 70%; }
+  100% { width: 100%; }
+}
+
+/* Footer */
+.footer {
   position: fixed;
-  bottom: 16px;
-  right: 24px;
-  z-index: 2;
-  font-size: 13px;
-  color: rgba(127, 208, 160, 0.42);
-  letter-spacing: 0.8px;
-  font-weight: 500;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: rgba(224, 232, 240, 0.4);
+  letter-spacing: 2px;
   text-transform: uppercase;
-  text-shadow: 0 0 10px rgba(127, 208, 160, 0.35);
+  font-family: 'Orbitron', sans-serif;
+  z-index: 2;
 }
 
-@media (max-width: 600px) {
-  #container { padding: 26px 18px 32px; margin: 12px; border-radius: 30px; }
-  #main-header { margin-bottom: 24px; padding-bottom: 18px; }
-  #main-header h1 { font-size: 38px; }
-  #main-header .sub { font-size: 16px; }
-  .card { padding: 24px 15px 24px; border-radius: 26px; }
-  #state { font-size: 24px; min-height: 64px; padding: 12px 14px; }
-  #det { font-size: 17px; padding: 14px 12px; }
-  #det .chip { font-size: 17px; padding: 4px 13px; }
-  #cache { font-size: 16px; }
-  .loader-dot { width: 10px; height: 10px; }
+.footer span {
+  color: var(--neon-green);
 }
 
-@keyframes pulse-glow {
-  0% { opacity: 0.65; }
-  50% { opacity: 1; }
-  100% { opacity: 0.65; }
+/* Responsive */
+@media (max-width: 768px) {
+  .brand-name { font-size: 32px; }
+  .main-card { padding: 24px; }
+  .info-grid { grid-template-columns: 1fr; }
+  .status-text { font-size: 20px; }
 }
 
-.pulse { animation: pulse-glow 2.4s ease-in-out infinite; }
+/* Hidden output for exploit logs */
+#out-container {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  left: -99999px;
+  top: -99999px;
+}
 
+#out {
+  white-space: pre-wrap;
+  font: 12px/1.45 Consolas, monospace;
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 8px;
+  padding: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+  color: var(--neon-green);
+}
 </style>
 </head>
-
 <body>
 
-<div id="container">
+<div class="scanlines"></div>
 
-  <div id="main-header">
-    <h1>HAMDON.COM</h1>
-    <div class="sub">
-      <span>PS4</span>
-      &bull;
-      GoldHEN 13.xx Jailbreak
-    </div>
+<div id="container">
+  
+  <!-- Logo Section -->
+  <div class="logo-section">
+    <img src="logo_raw.png" alt="HAMDON.COM" class="logo-img">
+    <h1 class="brand-name">HAMDON.COM</h1>
+    <p class="tagline">PS4 Jailbreak • GoldHEN • 13.xx</p>
   </div>
 
-  <div class="card">
-    <div id="state">جارٍ كشف النسخة...</div>
-    <div id="det"></div>
-    <div id="cache"></div>
-    <div class="loading">
-      <span class="loader-dot"></span>
-      <span class="loader-dot"></span>
-      <span class="loader-dot"></span>
+  <!-- Main Card -->
+  <div class="main-card">
+    
+    <!-- Status -->
+    <div class="status-box">
+      <div id="state" class="status-text detecting">
+        جارٍ كشف إصدار النظام...
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
     </div>
+
+    <!-- Info Grid -->
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-label">Firmware</div>
+        <div id="fw-value" class="info-value fw">--</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Exploit</div>
+        <div id="bug-value" class="info-value bug">--</div>
+      </div>
+    </div>
+
+    <!-- Cache Status -->
+    <div id="cache" class="cache-status">
+      جاري التحقق من التخزين المؤقت...
+    </div>
+
+    <!-- Loading Dots -->
+    <div class="loader-container">
+      <div class="loader-dot"></div>
+      <div class="loader-dot"></div>
+      <div class="loader-dot"></div>
+    </div>
+
   </div>
 
 </div>
 
-<div class="footer-brand">HAMDON PS4 TOOL</div>
+<!-- Footer -->
+<div class="footer">
+  <span>⚡</span> HAMDON.COM <span>⚡</span> PS4 JAILBREAK HOST
+</div>
+
+<!-- Hidden Output -->
+<div id="out-container">
+  <div id="out"></div>
+</div>
 
 <script>
-
 (function () {
     var stateEl = document.getElementById("state");
-    var detEl = document.getElementById("det");
+    var fwEl = document.getElementById("fw-value");
+    var bugEl = document.getElementById("bug-value");
     var cacheEl = document.getElementById("cache");
 
-    function setState(t, c) { stateEl.innerHTML = t; stateEl.className = c || ""; }
-    function setCache(t, ok) { cacheEl.textContent = t; cacheEl.className = ok ? "cacheok" : ""; }
+    function setState(t, c) { 
+        stateEl.textContent = t; 
+        stateEl.className = "status-text " + (c || "detecting"); 
+    }
+
+    function setCache(t, ok) { 
+        cacheEl.textContent = t; 
+        cacheEl.className = "cache-status" + (ok ? " ready" : ""); 
+    }
 
     var params = new URLSearchParams(location.search);
     var key = null, fwnum = null;
@@ -311,9 +455,13 @@ body::after {
 
     if (forced === "lapse" || forced === "poops") {
         bug = forced;
-        why = "تم التحديد يدوياً ?bug=" + forced;
+        why = "forced via ?bug=" + forced;
     } else if (!key) {
-        why = "هذا المتصفح ليس بلايستيشن 4";
+        why = "هذا المتصفح ليس PlayStation 4";
+        fwEl.textContent = "غير معروف";
+        bugEl.textContent = "لا يوجد";
+        setState("نسخة غير مدعومة", "error");
+        return;
     } else if (fwnum <= 1202) {
         bug = "lapse";
         why = key + " — متوافق (Lapse)";
@@ -322,27 +470,29 @@ body::after {
         why = key + " — متوافق (Poops)";
     } else {
         why = key + " — غير مدعوم";
-    }
-
-    var fwDisplay = key ? "<b>" + key + "</b>" : "<span style='color:#8f9eb0;'>غير معروف</span>";
-    var bugDisplay = bug ? "<span class='chip'>" + bug.toUpperCase() + "</span>" : "<span style='color:#8f9eb0;'>لا يوجد</span>";
-
-    detEl.innerHTML = "النظام " + fwDisplay + " &nbsp;•&nbsp; " + "الثغرة " + bugDisplay + " &nbsp;•&nbsp; " + why;
-
-    if (!bug) {
-        setState("نسخة غير مدعومة", "bad");
+        fwEl.textContent = key;
+        bugEl.textContent = "غير مدعوم";
+        setState("نسخة غير مدعومة", "error");
         return;
     }
 
-    var target = (bug === "lapse" ? "run_lapse.html" : "run_poops.html") + location.search;
+    fwEl.textContent = key || "غير معروف";
+    bugEl.textContent = bug ? bug.toUpperCase() : "لا يوجد";
+
+    if (!bug) {
+        setState("نسخة غير مدعومة", "error");
+        return;
+    }
+
+    var target = (bug === "lapse" ? "run_lapse.html" : "PS4_13.00_Webkit.html") + location.search;
 
     function go() {
-        setState("جارٍ تحميل " + bug + " ...", "warn");
+        setState("جارٍ تحميل " + bug + "...", "warning");
         location.replace(target);
     }
 
     function waitForTap(msg, action) {
-        setState(msg, "warn");
+        setState(msg, "warning");
         function fire() {
             window.removeEventListener("click", fire);
             window.removeEventListener("keydown", fire);
@@ -365,15 +515,15 @@ body::after {
     } else if (ac.status === ac.UPDATEREADY) {
         try { ac.swapCache(); } catch (e) {}
         setCache("تم تحميل التحديث", true);
-        waitForTap("تحديث جاهز — اضغط للتحديث والتشغيل", function () { location.reload(); });
+        waitForTap("تحديث جاهز — اضغط للمتابعة", function () { location.reload(); });
     } else {
         setCache("جارٍ التحقق من التخزين المؤقت...");
-        ac.addEventListener("downloading", function () { setCache("التخزين المؤقت للمرة الأولى..."); }, false);
+        ac.addEventListener("downloading", function () { setCache("جارٍ التخزين للمرة الأولى..."); }, false);
         ac.addEventListener("progress", function (e) {
             if (e && e.total) setCache("تخزين " + Math.round((e.loaded / e.total) * 100) + "%");
         }, false);
         ac.addEventListener("cached", function () {
-            setCache("تم التخزين المؤقت — جاهز للاستخدام دون اتصال", true);
+            setCache("تم التخزين — جاهز للاستخدام دون اتصال", true);
             waitForTap("جاهز — اضغط للتشغيل", go);
         }, false);
         ac.addEventListener("updateready", function () {
@@ -387,7 +537,7 @@ body::after {
         }, false);
         ac.addEventListener("error", function () {
             setCache("فشل التخزين المؤقت");
-            waitForTap("فشل التخزين — اضغط للتشغيل رغم ذلك", go);
+            waitForTap("فشل التخزين — اضغط للمتابعة", go);
         }, false);
         ac.addEventListener("obsolete", function () {
             setCache("التخزين المؤقت قديم");
@@ -395,7 +545,6 @@ body::after {
         }, false);
     }
 })();
-
 </script>
 
 </body>
