@@ -3,24 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HAMDON.COM | Poops Chain 13.xx</title>
+<title>HAMDON.COM - Poops Chain 13.xx</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;700;900&display=swap');
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-:root {
-  --neon-purple: #b026ff;
-  --neon-pink: #ff0080;
-  --dark-bg: #0a0e1a;
-  --card-bg: rgba(15, 20, 35, 0.9);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html, body {
   min-height: 100vh;
-  background: var(--dark-bg);
-  color: #e0e8f0;
-  font-family: 'Cairo', sans-serif;
+  background: #05070c;
+  color: #e8edf5;
+  font: 18px/1.6 "Segoe UI", "Tahoma", system-ui, -apple-system, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   overflow: hidden;
 }
@@ -29,278 +27,142 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: 
-    radial-gradient(circle at 30% 40%, rgba(176, 38, 255, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 70% 60%, rgba(255, 0, 128, 0.08) 0%, transparent 50%);
+  background-image: url('preview.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.88;
   z-index: 0;
+  filter: brightness(0.62) contrast(1.08);
 }
 
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: 
-    linear-gradient(rgba(176, 38, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(176, 38, 255, 0.02) 1px, transparent 1px);
-  background-size: 40px 40px;
+  background: radial-gradient(circle at center, rgba(0, 255, 136, 0.08), rgba(0, 0, 0, 0.58));
   z-index: 0;
   pointer-events: none;
 }
 
 #wrap {
+  padding: 16px 18px;
   position: relative;
   z-index: 1;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 30px;
-  animation: fadeIn 0.6s ease-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.logo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 2px solid var(--neon-purple);
-  box-shadow: 0 0 20px rgba(176, 38, 255, 0.4);
-  margin-bottom: 16px;
-}
-
-.title {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 36px;
-  font-weight: 900;
-  background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: 3px;
-}
-
-.subtitle {
-  font-size: 14px;
-  color: rgba(224, 232, 240, 0.6);
-  margin-top: 8px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.card {
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(176, 38, 255, 0.2);
-  border-radius: 20px;
-  padding: 32px;
-  max-width: 600px;
-  width: 100%;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  animation: slideUp 0.6s ease-out 0.2s both;
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.status {
-  background: rgba(176, 38, 255, 0.05);
-  border: 1px solid rgba(176, 38, 255, 0.2);
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.status-text {
-  font-size: 20px;
+#state {
+  font-size: 22px;
   font-weight: 700;
-  color: var(--neon-purple);
-  font-family: 'Orbitron', sans-serif;
+  margin: 0 0 6px;
+  text-align: center;
 }
 
-.progress-container {
-  margin-top: 16px;
+#det {
+  font-size: 13px;
+  color: #8b95a3;
+  margin: 0 0 4px;
+  text-align: center;
 }
 
-.progress-bar-wrapper {
-  width: 100%;
-  height: 10px;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 5px;
-  overflow: hidden;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+#det b {
+  color: #c8ced8;
+  font-weight: 600;
 }
 
-.progress-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--neon-purple), var(--neon-pink));
-  border-radius: 5px;
-  transition: width 0.3s ease-out;
-  box-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
-}
-
-.progress-text {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+#cache {
   font-size: 12px;
-  color: rgba(224, 232, 240, 0.7);
+  color: #5c6672;
+  margin: 0 0 10px;
+  min-height: 14px;
+  text-align: center;
 }
 
-.progress-percent {
-  font-family: 'Orbitron', sans-serif;
-  font-weight: 700;
-  color: var(--neon-purple);
+#cache.cacheok {
+  color: #00ff88;
 }
 
-.loader {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 16px;
+.ok {
+  color: #00ff88;
 }
 
-.dot {
-  width: 10px;
-  height: 10px;
+.bad {
+  color: #d08a7f;
+}
+
+.warn {
+  color: #d8c07f;
+}
+
+#brand {
+  text-align: center;
+  padding: 8px 10px;
+  background: #0e1116;
+  border-bottom: 1px solid #1e2732;
+}
+
+#brand img {
+  width: 28px;
+  height: 28px;
+  margin-right: 8px;
   border-radius: 50%;
-  background: var(--neon-purple);
-  animation: pulse 1.4s ease-in-out infinite;
+  vertical-align: middle;
 }
 
-.dot:nth-child(2) { animation-delay: 0.2s; background: var(--neon-pink); }
-.dot:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes pulse {
-  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-  40% { transform: scale(1.2); opacity: 1; }
+#brand b {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: #e6ebf2;
+  vertical-align: middle;
 }
 
-#out-container {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-  left: -99999px;
-  top: -99999px;
-}
-
-#out {
-  white-space: pre-wrap;
-  font: 11px/1.4 Consolas, monospace;
-  background: rgba(0, 0, 0, 0.9);
-  border: 1px solid rgba(176, 38, 255, 0.2);
-  border-radius: 8px;
-  padding: 12px;
-  max-height: 400px;
-  overflow-y: auto;
-  color: var(--neon-purple);
-}
-
-.footer {
+.footer-brand {
   position: fixed;
   bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 11px;
-  color: rgba(224, 232, 240, 0.4);
-  letter-spacing: 2px;
-  font-family: 'Orbitron', sans-serif;
+  right: 24px;
   z-index: 2;
+  font-size: 13px;
+  color: rgba(0, 255, 136, 0.42);
+  letter-spacing: 0.8px;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.35);
 }
 
 @media (max-width: 600px) {
-  .title { font-size: 28px; }
-  .card { padding: 24px; }
+  #wrap {
+    padding: 12px 14px;
+  }
+  #state {
+    font-size: 18px;
+  }
+  #det {
+    font-size: 11px;
+  }
+  #cache {
+    font-size: 10px;
+  }
 }
 </style>
 </head>
 <body>
 
+<div id="brand">
+  <img src="logo_raw.png" alt="" width="28" height="28">
+  <b>HAMDON.COM</b>
+</div>
+
 <div id="wrap">
-  
-  <div class="header">
-    <img src="logo_raw.png" alt="HAMDON" class="logo">
-    <h1 class="title">HAMDON.COM</h1>
-    <p class="subtitle">Poops Chain • Firmware ≥ 12.50</p>
-  </div>
-
-  <div class="card">
-    <div class="status">
-      <div id="state" class="status-text">
-        جارٍ تحميل سلسلة Poops...
-      </div>
-      
-      <div class="progress-container">
-        <div class="progress-bar-wrapper">
-          <div id="progressBar" class="progress-bar-fill" style="width: 0%"></div>
-        </div>
-        <div class="progress-text">
-          <span id="progressLabel">جاري التحميل</span>
-          <span id="progressPercent" class="progress-percent">0%</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <div id="state">loading poops chain...</div>
+  <div id="det"></div>
+  <div id="cache"></div>
 </div>
 
-<div class="footer">⚡ HAMDON.COM • POOPS EXPLOIT ⚡</div>
-
-<div id="out-container">
-  <div id="out"></div>
-</div>
+<div class="footer-brand">HAMDON POOPS</div>
 
 <script type="module">
 import "./chain_poops.js";
-
-const stateEl = document.getElementById("state");
-const progressBar = document.getElementById("progressBar");
-const progressPercent = document.getElementById("progressPercent");
-const progressLabel = document.getElementById("progressLabel");
-
-let progress = 0;
-const progressInterval = setInterval(() => {
-  if (progress < 90) {
-    progress += Math.random() * 3;
-    if (progress > 90) progress = 90;
-    progressBar.style.width = progress + "%";
-    progressPercent.textContent = Math.floor(progress) + "%";
-  }
-}, 150);
-
-window.poopsDone = function () {
-  clearInterval(progressInterval);
-  progressBar.style.width = "100%";
-  progressPercent.textContent = "100%";
-  progressLabel.textContent = "اكتمل بنجاح";
-  stateEl.textContent = "تم تهكير الجهاز بنجاح";
-  stateEl.style.color = "#00ff88";
-};
-
-window.poopsError = function () {
-  clearInterval(progressInterval);
-  progressBar.style.width = "100%";
-  progressPercent.textContent = "فشل";
-  progressLabel.textContent = "حدث خطأ";
-  stateEl.textContent = "فشل — يرجى إعادة تشغيل PS4";
-  stateEl.style.color = "#ff4466";
-};
 </script>
-
 </body>
 </html>
