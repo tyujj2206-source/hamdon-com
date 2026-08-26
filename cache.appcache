@@ -1,11 +1,15 @@
 CACHE MANIFEST
-# HAMDON.COM v2.0
+# HAMDON.COM PS4 Jailbreak Host
+# Version: 2.0
 # Updated: 2026-08-26
 
 CACHE:
+# HTML Files
 index.html
 run_lapse.html
 PS4_13.00_Webkit.html
+
+# JavaScript Files
 chain_lapse.js
 chain_poops.js
 core.js
@@ -13,11 +17,26 @@ int64.js
 mem.js
 ps4_offsets.js
 rpc_worker.js
+
+# Image Files
 logo_raw.png
+
+# Payload
 payload.bin
+
+# Kernel Patches
+patches/670.bin
+patches/700.bin
+patches/750.bin
+patches/800.bin
+patches/850.bin
+patches/900.bin
+patches/903.bin
+patches/950.bin
 patches/1100.bin
 patches/1150.bin
 patches/1200.bin
+patches/1202.bin
 patches/1300.bin
 
 NETWORK:
